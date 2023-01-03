@@ -26,18 +26,21 @@
           :movie="movie"
         />
       </div>
-      <div>
+      <div v-if="totalCountMovies">
         <h3>All Movies (count: {{ totalCountMovies }})</h3>
         <MovieItem v-for="movie of movies" :key="movie.id" :movie="movie" />
       </div>
     </div>
-    <div class="search" v-else>Search</div>
+    <div class="search" v-else>
+      <SearchMovie />
+    </div>
   </main>
 </template>
 <script setup lang="ts">
 import { useMoviesStore } from '@/stores/movie';
 import MovieItem from '@/components/movie/MovieItem.vue';
 import { computed } from 'vue';
+import SearchMovie from '@/components/movie/SearchMovie.vue';
 
 const moviesStore = useMoviesStore();
 const movies = computed(() => moviesStore.movies);

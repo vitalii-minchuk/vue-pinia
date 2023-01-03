@@ -8,7 +8,7 @@
     <div>
       <div class="movie-name">{{ title }} ({{ movie.release_date }})</div>
       <span class="movie-overview">{{ movie.overview }}</span>
-      <div class="movie-buttons">
+      <div v-if="!isSearch" class="movie-buttons">
         <button @click="handleWatched" class="btn movie-buttons-watched">
           <span v-if="!movie.isWatched">Watched</span>
           <span v-else>Unwatched</span>
@@ -17,18 +17,22 @@
           Delete
         </button>
       </div>
+      <button v-else @click="handleAddMovie" class="btn movie-buttons-watched">
+        Add
+      </button>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import { MOVIE_POSTER_BASE_URL } from '@/constants';
+import { useMoviesStore } from '@/stores/movie';
 import type { Movie } from '@/types';
 import { computed } from 'vue';
-import { useMoviesStore } from '@/stores/movie';
 
 const movieStore = useMoviesStore();
 const props = defineProps({
   movie: { type: Object as () => Movie, required: true, default: () => {} },
+  isSearch: { type: Boolean, required: false, default: false },
 });
 const title = computed(() => props.movie.original_title);
 
@@ -38,6 +42,12 @@ function handleWatched() {
 
 function handleDelete() {
   movieStore.deleteMovie(props.movie.id);
+}
+
+function handleAddMovie() {
+  const newMovie = { ...props.movie, isWatched: false };
+  movieStore.addMovieToFavorite(newMovie);
+  movieStore.setActiveTab(1);
 }
 </script>
 <style lang="css" scoped>
