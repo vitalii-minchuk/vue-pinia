@@ -2407,6 +2407,11 @@ vue@^3.2.45:
     "@vue/server-renderer" "3.2.45"
     "@vue/shared" "3.2.45"
 
+vuetify@^3.0.6:
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-3.0.7.tgz#2f7b44f02ae0a91b34717eaf9f391d5ced4973e9"
+  integrity sha512-FpMlngW5euwad1DTuJGsS6o4rOdZvPjCVPVPJMiCU52/IcFHuSpjvrSkk7WE1HwFqwc3z/LzZ0p+cEmDinkNlA==
+
 which-boxed-primitive@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/which-boxed-primitive/-/which-boxed-primitive-1.0.2.tgz#13757bc89b209b049fe5d86430e21cf40a89a8e6"
