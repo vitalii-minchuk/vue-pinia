@@ -1,5 +1,5 @@
-import { MOVIE_API_BASE_URL } from '@/constants';
 import { defineStore } from 'pinia';
+import { MOVIE_API_BASE_URL } from '@/constants';
 
 export const useSearchStore = defineStore('search', {
   state: () => ({
@@ -13,9 +13,6 @@ export const useSearchStore = defineStore('search', {
       const data = await res.json();
       this.movies = data.results;
       this.loader = false;
-    },
-    cleanSearch() {
-      this.movies = [];
     },
   },
 });

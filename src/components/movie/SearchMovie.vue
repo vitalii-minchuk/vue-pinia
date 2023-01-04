@@ -36,7 +36,7 @@ function handleSearch() {
 
 function resetSearch() {
   searchMovie.value = '';
-  searchStore.cleanSearch();
+  searchStore.$reset();
 }
 
 onMounted(resetSearch);
