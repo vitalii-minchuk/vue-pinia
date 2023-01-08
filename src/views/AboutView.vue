@@ -9,7 +9,6 @@
         <v-btn v-bind="props">Tooltip</v-btn>
       </template>
     </v-tooltip>
-    <v-icon size="large" color="green-darken-2"> mdi-domain </v-icon>
     <v-menu>
       <template v-slot:activator="{ props }">
         <v-btn color="primary" v-bind="props"> Activator slot </v-btn>
