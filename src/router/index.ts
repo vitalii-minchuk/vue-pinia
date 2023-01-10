@@ -15,9 +15,14 @@ const router = createRouter({
       component: () => import('@/views/AboutView.vue'),
     },
     {
-      path: '/gantt',
-      name: 'gantt',
-      component: () => import('@/views/GanttView.vue'),
+      path: '/search',
+      name: 'search',
+      component: () => import('@/views/SearchView.vue'),
+    },
+    {
+      path: '/apex',
+      name: 'apex',
+      component: () => import('@/views/ApexCgart.vue'),
     },
   ],
 });
