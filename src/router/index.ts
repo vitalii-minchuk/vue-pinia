@@ -22,7 +22,7 @@ const router = createRouter({
     {
       path: '/apex',
       name: 'apex',
-      component: () => import('@/views/ApexCgart.vue'),
+      component: () => import('@/views/ApexChart.vue'),
     },
   ],
 });
