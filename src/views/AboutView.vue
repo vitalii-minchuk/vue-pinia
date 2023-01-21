@@ -1,32 +1,39 @@
 <template>
-  <v-data-table :headers="headers" :items="desserts" class="elevation-1">
-    <template v-slot:items="props">
-      <td>{{ props.item.name }}</td>
-      <td class="text-xs-right">{{ props.item.calories }}</td>
-      <td class="text-xs-right">{{ props.item.fat }}</td>
-      <td class="text-xs-right">{{ props.item.carbs }}</td>
-      <td class="text-xs-right">{{ props.item.protein }}</td>
-      <td class="text-xs-right">{{ props.item.iron }}</td>
+  <v-data-table
+    :headers="headers"
+    :items="desserts"
+    item-value="name"
+    class="elevation-1"
+  >
+    <template v-slot:item="{ item }">
+      <tr>
+        <td class="table-cell">{{ item.columns.name }}</td>
+        <td class="table-cell">{{ item.columns.calories }}</td>
+        <td class="table-cell">{{ item.columns.fat }}</td>
+        <td class="table-cell">{{ item.columns.carbs }}</td>
+        <td class="table-cell">{{ item.columns.protein }}</td>
+        <td class="table-cell">{{ item.columns.iron }}</td>
+      </tr>
     </template>
   </v-data-table>
 </template>
-
 <script lang="ts">
 export default {
   data() {
     return {
+      selected: [],
       headers: [
         {
-          text: 'Dessert (100g serving)',
-          align: 'left',
+          title: 'Dessert (100g serving)',
+          align: 'start',
           sortable: false,
-          value: 'name',
+          key: 'name',
         },
-        { text: 'Calories', value: 'calories' },
-        { text: 'Fat (g)', value: 'fat' },
-        { text: 'Carbs (g)', value: 'carbs' },
-        { text: 'Protein (g)', value: 'protein' },
-        { text: 'Iron (%)', value: 'iron' },
+        { title: 'Calories', key: 'calories' },
+        { title: 'Fat (g)', key: 'fat' },
+        { title: 'Carbs (g)', key: 'carbs' },
+        { title: 'Protein (g)', key: 'protein' },
+        { title: 'Iron (%)', key: 'iron' },
       ],
       desserts: [
         {
@@ -114,3 +121,10 @@ export default {
   },
 };
 </script>
+<style>
+.table-cell {
+  height: 64px;
+  border-top: 1px solid red;
+  border-right: 1px solid red;
+}
+</style>
