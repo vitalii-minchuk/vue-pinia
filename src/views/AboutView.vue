@@ -1,27 +1,45 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="desserts"
-    item-value="name"
-    class="elevation-1"
-  >
-    <template v-slot:item="{ item }">
-      <tr>
-        <td class="table-cell">{{ item.columns.name }}</td>
-        <td class="table-cell">{{ item.columns.calories }}</td>
-        <td class="table-cell">{{ item.columns.fat }}</td>
-        <td class="table-cell">{{ item.columns.carbs }}</td>
-        <td class="table-cell">{{ item.columns.protein }}</td>
-        <td class="table-cell">{{ item.columns.iron }}</td>
-      </tr>
-    </template>
-  </v-data-table>
+  <div class="task-pool-table">
+    <v-data-table
+      :headers="headers"
+      :items="desserts"
+      :group-by="groupBy"
+      class="elevation-1"
+    >
+      <template
+        v-slot:group-header="{ item, columns, toggleGroup, isGroupOpen }"
+      >
+        <tr>
+          <td :colspan="columns.length">
+            <VBtn
+              size="small"
+              variant="text"
+              :icon="isGroupOpen(item) ? '$expand' : '$next'"
+              @click="toggleGroup(item)"
+            >
+            </VBtn>
+            {{ item.value ? 'Contains gluten' : 'Gluten free' }}
+          </td>
+        </tr>
+        <tr v-if="isGroupOpen(item)">
+          <td v-for="column in columns" :key="column.title">
+            {{ column.title }}
+          </td>
+        </tr>
+      </template>
+    </v-data-table>
+  </div>
 </template>
 <script lang="ts">
 export default {
   data() {
     return {
-      selected: [],
+      groupBy: [
+        {
+          key: 'gluten',
+          order: 'asc',
+        },
+      ],
       headers: [
         {
           title: 'Dessert (100g serving)',
@@ -43,6 +61,7 @@ export default {
           carbs: 24,
           protein: 4.0,
           iron: '1%',
+          gluten: false,
         },
         {
           name: 'Ice cream sandwich',
@@ -51,6 +70,7 @@ export default {
           carbs: 37,
           protein: 4.3,
           iron: '1%',
+          gluten: false,
         },
         {
           name: 'Eclair',
@@ -59,6 +79,7 @@ export default {
           carbs: 23,
           protein: 6.0,
           iron: '7%',
+          gluten: true,
         },
         {
           name: 'Cupcake',
@@ -67,6 +88,7 @@ export default {
           carbs: 67,
           protein: 4.3,
           iron: '8%',
+          gluten: true,
         },
         {
           name: 'Gingerbread',
@@ -75,6 +97,7 @@ export default {
           carbs: 49,
           protein: 3.9,
           iron: '16%',
+          gluten: true,
         },
         {
           name: 'Jelly bean',
@@ -83,6 +106,7 @@ export default {
           carbs: 94,
           protein: 0.0,
           iron: '0%',
+          gluten: false,
         },
         {
           name: 'Lollipop',
@@ -91,6 +115,7 @@ export default {
           carbs: 98,
           protein: 0,
           iron: '2%',
+          gluten: false,
         },
         {
           name: 'Honeycomb',
@@ -99,6 +124,7 @@ export default {
           carbs: 87,
           protein: 6.5,
           iron: '45%',
+          gluten: true,
         },
         {
           name: 'Donut',
@@ -107,6 +133,7 @@ export default {
           carbs: 51,
           protein: 4.9,
           iron: '22%',
+          gluten: true,
         },
         {
           name: 'KitKat',
@@ -115,6 +142,7 @@ export default {
           carbs: 65,
           protein: 7,
           iron: '6%',
+          gluten: true,
         },
       ],
     };
@@ -122,9 +150,11 @@ export default {
 };
 </script>
 <style>
-.table-cell {
+.task-pool-table thead {
+  display: none;
+}
+.row {
   height: 64px;
-  border-top: 1px solid red;
-  border-right: 1px solid red;
+  border-bottom: 1px solid red;
 }
 </style>
