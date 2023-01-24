@@ -50,6 +50,7 @@
     <TheList />
     <TheContainer />
     <TheChips />
+    <TheTest />
   </v-container>
 </template>
 
@@ -57,6 +58,7 @@
 import TheChips from '@/components/TheChips.vue';
 import TheContainer from '@/components/TheContainer.vue';
 import TheList from '@/components/TheList.vue';
+import TheTest from '@/components/TneTest.vue';
 import { useTheme } from 'vuetify';
 
 const theme = useTheme();
