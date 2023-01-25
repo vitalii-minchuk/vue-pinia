@@ -6,3 +6,14 @@ export type Movie = {
   release_date: string;
   isWatched: boolean;
 };
+
+export type User = {
+  id: string;
+  fullName: string;
+  projects: Project[];
+};
+
+export type Project = {
+  id: string;
+  title: string;
+};

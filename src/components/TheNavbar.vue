@@ -16,6 +16,12 @@
       >
         about
       </RouterLink>
+      <RouterLink
+        to="/users"
+        class="text-uppercase text-decoration-none text-caption"
+      >
+        users
+      </RouterLink>
     </nav>
   </v-toolbar>
 </template>

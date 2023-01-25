@@ -1,26 +1,22 @@
 <template>
   <v-card>
     <h3>vue-use</h3>
+    <input type="text" ref="nameInput" />
+    <v-btn @click="setName">+</v-btn>
   </v-card>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { ref, watch } from 'vue';
 
-const expanded = ref(true);
-const expandedIcon = computed(() =>
-  expanded.value ? 'mdi-chevron-left' : 'mdi-chevron-right'
-);
-const items = computed(() => [
-  {
-    text: 'Boards',
-    icon: 'mdi-plus',
-    selected: true,
-    data: {
-      path: '/',
-    },
-  },
-]);
+const name = ref('');
+const nameInput = ref<HTMLInputElement | null>(null);
+function setName() {
+  name.value = nameInput.value?.value || '';
+}
+watch(name, function (newVal, oldVal) {
+  console.log('first1', newVal, oldVal);
+});
 </script>
 
 <style scoped></style>
