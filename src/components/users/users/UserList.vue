@@ -1,25 +1,17 @@
 <template>
   <v-col>
     <h2>Active Users</h2>
-    <BaseSearch :searchTerm="enteredSearchTerm" @search="updateSearch" />
-    <!-- <base-search
-      @search="updateSearch"
-      :search-term="enteredSearchTerm"
-    ></base-search>
-    <div>
-      <button @click="sort('asc')" :class="{ selected: sorting === 'asc' }">
-        Sort Ascending
-      </button>
-      <button @click="sort('desc')" :class="{ selected: sorting === 'desc' }">
-        Sort Descending
-      </button>
-    </div> -->
+    <BaseSearch :searchTerm="activeSearchTerm" @search="updateSearch" />
+
+    <div class="d-flex w-100 justify-space-around my-4">
+      <v-btn @click="sort('asc')"> Sort Ascending </v-btn>
+      <v-btn @click="sort('desc')"> Sort Descending </v-btn>
+    </div>
     <ul>
       <UserItem
-        v-for="user in availableUsers"
+        v-for="user in displayedUsers"
         :key="user.id"
         :userName="user.fullName"
-        :id="user.id"
         @choose-project="emit('list-projects', user.id)"
       />
     </ul>
@@ -29,7 +21,7 @@
 <script setup lang="ts">
 import type { User } from '@/types';
 import UserItem from '@/components/users/users/UserItem.vue';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 const props = defineProps<{
   users: User[];
@@ -39,6 +31,7 @@ const emit = defineEmits<{
 }>();
 const enteredSearchTerm = ref('');
 const activeSearchTerm = ref('');
+const sorting = ref<'asc' | 'desc' | null>(null);
 const availableUsers = computed<User[]>(() => {
   let usrs = [];
   if (enteredSearchTerm.value) {
@@ -50,69 +43,33 @@ const availableUsers = computed<User[]>(() => {
   }
   return usrs;
 });
+const displayedUsers = computed<User[]>(() => {
+  if (!sorting.value) {
+    return availableUsers.value;
+  }
+  return availableUsers.value.slice().sort((u1, u2) => {
+    if (sorting.value === 'asc' && u1.fullName > u2.fullName) {
+      return 1;
+    } else if (sorting.value === 'asc') {
+      return -1;
+    } else if (sorting.value === 'desc' && u1.fullName > u2.fullName) {
+      return -1;
+    } else {
+      return 1;
+    }
+  });
+});
 function updateSearch(val: string) {
   enteredSearchTerm.value = val;
 }
-//   data() {
-//     return {
-//       enteredSearchTerm: '',
-//       activeSearchTerm: '',
-//       sorting: null,
-//     };
-//   },
-//   computed: {
-//     availableUsers() {
-//       let users = [];
-//       if (this.activeSearchTerm) {
-//         users = this.users.filter((usr) =>
-//           usr.fullName.includes(this.activeSearchTerm)
-//         );
-//       } else if (this.users) {
-//         users = this.users;
-//       }
-//       return users;
-//     },
-//     displayedUsers() {
-//       if (!this.sorting) {
-//         return this.availableUsers;
-//       }
-//       return this.availableUsers.slice().sort((u1, u2) => {
-//         if (this.sorting === 'asc' && u1.fullName > u2.fullName) {
-//           return 1;
-//         } else if (this.sorting === 'asc') {
-//           return -1;
-//         } else if (this.sorting === 'desc' && u1.fullName > u2.fullName) {
-//           return -1;
-//         } else {
-//           return 1;
-//         }
-//       });
-//     },
-//   },
-//   methods: {
-//     updateSearch(val) {
-//       this.enteredSearchTerm = val;
-//     },
-//     sort(mode) {
-//       this.sorting = mode;
-//     },
-//   },
-//   watch: {
-//     enteredSearchTerm(val) {
-//       setTimeout(() => {
-//         if (val === this.enteredSearchTerm) {
-//           this.activeSearchTerm = val;
-//         }
-//       }, 300);
-//     },
-//   },
-// };
-</script>
-
-<style scoped>
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+function sort(mode: 'asc' | 'desc') {
+  sorting.value = mode;
 }
-</style>
+watch(enteredSearchTerm, (val) => {
+  setTimeout(() => {
+    if (val === enteredSearchTerm.value) {
+      activeSearchTerm.value = val;
+    }
+  }, 300);
+});
+</script>

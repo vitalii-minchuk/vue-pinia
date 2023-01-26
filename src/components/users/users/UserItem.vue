@@ -7,7 +7,6 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  id: string;
   userName: string;
 }>();
 const emit = defineEmits<{
