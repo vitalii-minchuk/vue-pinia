@@ -1,7 +1,5 @@
 <template>
-  <li>
-    <h3>{{ props.title }}</h3>
-  </li>
+  <v-list-item :title="props.title"></v-list-item>
 </template>
 
 <script setup lang="ts">

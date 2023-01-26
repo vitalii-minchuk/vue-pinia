@@ -7,14 +7,14 @@
       <v-btn @click="sort('asc')"> Sort Ascending </v-btn>
       <v-btn @click="sort('desc')"> Sort Descending </v-btn>
     </div>
-    <ul>
+    <v-list>
       <UserItem
         v-for="user in displayedUsers"
         :key="user.id"
         :userName="user.fullName"
         @choose-project="emit('list-projects', user.id)"
       />
-    </ul>
+    </v-list>
   </v-col>
 </template>
 
@@ -33,6 +33,7 @@ const enteredSearchTerm = ref('');
 const activeSearchTerm = ref('');
 const sorting = ref<'asc' | 'desc' | null>(null);
 const availableUsers = computed<User[]>(() => {
+  emit('list-projects', '12345');
   let usrs = [];
   if (enteredSearchTerm.value) {
     usrs = props.users.filter((usr) =>

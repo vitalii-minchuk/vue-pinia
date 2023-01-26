@@ -1,8 +1,7 @@
 <template>
-  <li>
-    <h3>{{ props.userName }}</h3>
-    <button @click="emit('choose-project')">View Projects</button>
-  </li>
+  <v-list-item :title="props.userName">
+    <v-btn @click="emit('choose-project')">View Projects</v-btn>
+  </v-list-item>
 </template>
 
 <script setup lang="ts">
