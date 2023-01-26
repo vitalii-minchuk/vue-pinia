@@ -1,6 +1,7 @@
 <template>
   <v-col>
     <h2>Active Users</h2>
+    <BaseSearch :searchTerm="enteredSearchTerm" @search="updateSearch" />
     <!-- <base-search
       @search="updateSearch"
       :search-term="enteredSearchTerm"
@@ -15,7 +16,7 @@
     </div> -->
     <ul>
       <UserItem
-        v-for="user in props.users"
+        v-for="user in availableUsers"
         :key="user.id"
         :userName="user.fullName"
         :id="user.id"
@@ -28,6 +29,7 @@
 <script setup lang="ts">
 import type { User } from '@/types';
 import UserItem from '@/components/users/users/UserItem.vue';
+import { computed, ref } from 'vue';
 
 const props = defineProps<{
   users: User[];
@@ -35,6 +37,22 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'list-projects', uid: string): void;
 }>();
+const enteredSearchTerm = ref('');
+const activeSearchTerm = ref('');
+const availableUsers = computed<User[]>(() => {
+  let usrs = [];
+  if (enteredSearchTerm.value) {
+    usrs = props.users.filter((usr) =>
+      usr.fullName.includes(enteredSearchTerm.value)
+    );
+  } else {
+    usrs = props.users;
+  }
+  return usrs;
+});
+function updateSearch(val: string) {
+  enteredSearchTerm.value = val;
+}
 //   data() {
 //     return {
 //       enteredSearchTerm: '',

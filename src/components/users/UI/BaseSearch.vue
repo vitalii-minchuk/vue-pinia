@@ -1,33 +1,22 @@
 <template>
-  <form>
-    <input type="search" @input="search" :value="searchTerm" placeholder="Filter items" />
-  </form>
+  <v-text-field
+    type="search"
+    @input="search"
+    :value="searchTerm"
+    label="Label"
+    variant="outlined"
+    placeholder="Filter items"
+  ></v-text-field>
 </template>
 
-<script>
-export default {
-  props: ['searchTerm'],
-  emits: ['search'],
-  methods: {
-    search(event) {
-      this.$emit('search', event.target.value);
-    },
-  },
-};
+<script setup lang="ts">
+const props = defineProps<{
+  searchTerm: string;
+}>();
+const emit = defineEmits<{
+  (e: 'search', search: string): void;
+}>();
+function search(e: Event) {
+  emit('search', (e.target as HTMLInputElement).value);
+}
 </script>
-
-<style scoped>
-input {
-  font: inherit;
-  width: 100%;
-  display: block;
-  padding: 0.15rem;
-  border: 1px solid #ccc;
-}
-
-input:focus {
-  outline: none;
-  border-color: #00006b;
-  background-color: #eeeeff;
-}
-</style>

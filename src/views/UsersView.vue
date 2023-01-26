@@ -13,10 +13,6 @@
       </v-col>
     </v-row>
   </v-container>
-  <!-- <main>
-    <user-list :users="activeUsers" @list-projects="selectUser"></user-list>
-    <projects-list :user="selectedUser"></projects-list>
-  </main> -->
 </template>
 
 <script setup lang="ts">
