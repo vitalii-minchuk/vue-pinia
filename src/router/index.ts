@@ -29,6 +29,11 @@ const router = createRouter({
       name: 'apex',
       component: () => import('@/views/ApexChart.vue'),
     },
+    {
+      path: '/gantt',
+      name: 'gantt',
+      component: () => import('@/views/GanntChart.vue'),
+    },
   ],
 });
 

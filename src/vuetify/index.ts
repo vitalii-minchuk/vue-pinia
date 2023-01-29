@@ -4,7 +4,7 @@ import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
 import '@mdi/font/css/materialdesignicons.css';
 import { aliases, mdi } from 'vuetify/iconsets/mdi';
-import * as labs from 'vuetify/labs/components';
+// import * as labs from 'vuetify/labs/components';
 
 const myCustomLightTheme = {
   colors: {
@@ -25,7 +25,7 @@ const myCustomLightTheme = {
 const vuetify = createVuetify({
   components: {
     ...components,
-    ...labs,
+    // ...labs,
   },
   directives,
   icons: {
