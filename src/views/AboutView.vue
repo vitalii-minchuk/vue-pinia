@@ -1,35 +1,47 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { ref } from 'vue';
-import { useCounter } from '@vueuse/shared';
-import { formatDate, useDebouncedRefHistory } from '@vueuse/core';
-import type { Ref } from 'vue';
-
-const format = (ts: number) => formatDate(new Date(ts), 'YYYY-MM-DD HH:mm:ss');
-const delay: Ref<number> = ref(1000);
-const { count, inc, dec } = useCounter();
-const { history, undo, redo, canUndo, canRedo } = useDebouncedRefHistory(
-  count,
-  { capacity: 10, debounce: delay }
-);
+import { useDropZone } from '@vueuse/core';
+const filesData = ref<
+  { name: string; size: number; type: string; lastModified: number }[]
+>([]);
+function onDrop(files: File[] | null) {
+  filesData.value = [];
+  if (files) {
+    filesData.value = files.map((file) => ({
+      name: file.name,
+      size: file.size,
+      type: file.type,
+      lastModified: file.lastModified,
+    }));
+  }
+}
+const dropZoneRef = ref<HTMLElement>();
+const { isOverDropZone } = useDropZone(dropZoneRef, onDrop);
 </script>
 
 <template>
-  <div>Count: {{ count }}</div>
-  <v-btn @click="inc()">Increment</v-btn>
-  <v-btn @click="dec()">Decrement</v-btn>
-  <span class="ml-2">/</span>
-  <v-btn :disabled="!canUndo" @click="undo()">Undo</v-btn>
-  <v-btn :disabled="!canRedo" @click="redo()">Redo</v-btn>
-  <br />
-  <span>Delay (in ms):</span>
-  <input v-model="delay" type="number" />
-  <br />
-  <br />
-  <note>History (limited to 10 records for demo)</note>
-  <div class="code-block mt-4">
-    <div v-for="i in history" :key="i.timestamp">
-      <span class="opacity-50 mr-2 font-mono">{{ format(i.timestamp) }}</span>
-      <span class="font-mono">{ value: {{ i.snapshot }} }</span>
+  <div>
+    <div ref="dropZoneRef">
+      <div class="box" :class="{ active: isOverDropZone }">isOverDropZone:</div>
+      <div>
+        <div v-for="(file, index) in filesData" :key="index">
+          <p>Name: {{ file.name }}</p>
+          <p>Size: {{ file.size }}</p>
+          <p>Type: {{ file.type }}</p>
+          <p>Last modified: {{ file.lastModified }}</p>
+        </div>
+      </div>
     </div>
+    {{ isOverDropZone }}
   </div>
 </template>
+
+<style>
+.box {
+  border: 1px solid green;
+}
+.active {
+  min-height: 100px;
+  border: 1px solid red;
+}
+</style>
