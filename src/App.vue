@@ -16,13 +16,13 @@
 </template>
 
 <script setup lang="ts">
-import { RouterView } from 'vue-router';
-import TheNavbar from '@/components/TheNavbar.vue';
-import { ref } from 'vue';
+import { RouterView } from 'vue-router'
+import TheNavbar from '@/components/TheNavbar.vue'
+import { ref } from 'vue'
 
-const isNavOpen = ref(false);
+const isNavOpen = ref(false)
 
 function toggleNav() {
-  isNavOpen.value = !isNavOpen.value;
+  isNavOpen.value = !isNavOpen.value
 }
 </script>
