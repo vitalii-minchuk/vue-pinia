@@ -15,6 +15,7 @@
     "apexcharts": "^3.36.3",
     "gantt-elastic": "^1.0.12",
     "gantt-schedule-timeline-calendar": "^3.33.13",
+    "js-yaml": "^4.1.0",
     "pinia": "^2.0.28",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6",
@@ -24,6 +25,7 @@
   "devDependencies": {
     "@mdi/font": "^7.1.96",
     "@rushstack/eslint-patch": "^1.1.4",
+    "@types/js-yaml": "^4.0.5",
     "@types/node": "^18.11.12",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vitejs/plugin-vue-jsx": "^3.0.0",
